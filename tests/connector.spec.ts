@@ -404,13 +404,13 @@ test.describe('Package Access Controls', () => {
 test.describe('Operations Queue', () => {
   test('shows operations in connector modal', async ({ page, gotoConnected, mockConnector }) => {
     // Add some operations
-    mockConnector.addOperation({
+    await mockConnector.addOperation({
       type: 'org:add-user',
       params: { org: '@testorg', user: 'newuser', role: 'developer' },
       description: 'Add @newuser to @testorg as developer',
       command: 'npm org set @testorg newuser developer',
     })
-    mockConnector.addOperation({
+    await mockConnector.addOperation({
       type: 'org:rm-user',
       params: { org: '@testorg', user: 'olduser' },
       description: 'Remove @olduser from @testorg',
@@ -433,7 +433,7 @@ test.describe('Operations Queue', () => {
   })
 
   test('can approve and execute operations', async ({ page, gotoConnected, mockConnector }) => {
-    mockConnector.addOperation({
+    await mockConnector.addOperation({
       type: 'org:add-user',
       params: { org: '@testorg', user: 'newuser', role: 'developer' },
       description: 'Add @newuser to @testorg',
@@ -473,7 +473,7 @@ test.describe('Operations Queue', () => {
   })
 
   test('can clear pending operations', async ({ page, gotoConnected, mockConnector }) => {
-    mockConnector.addOperation({
+    await mockConnector.addOperation({
       type: 'org:add-user',
       params: { org: '@testorg', user: 'newuser', role: 'developer' },
       description: 'Add @newuser to @testorg',

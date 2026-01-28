@@ -10,6 +10,10 @@ import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { ref, computed, readonly, nextTick } from 'vue'
 import type { VueWrapper } from '@vue/test-utils'
 import type { MockConnectorTestControls } from '../../../shared/test-utils'
+
+/** Subset of MockConnectorTestControls for unit tests that don't need stateManager */
+type UnitTestConnectorControls = Omit<MockConnectorTestControls, 'stateManager'>
+import type { PendingOperation } from '../../../cli/src/types'
 import { ConnectorModal } from '#components'
 
 // Mock state that will be controlled by tests
@@ -18,7 +22,7 @@ const mockState = ref({
   connecting: false,
   npmUser: null as string | null,
   avatar: null as string | null,
-  operations: [] as Array<{ id: string; status: string }>,
+  operations: [] as PendingOperation[],
   error: null as string | null,
   lastExecutionTime: null as number | null,
 })
@@ -81,8 +85,7 @@ function createMockUseConnector() {
 }
 
 // Test controls for manipulating mock state
-const mockControls: MockConnectorTestControls = {
-  stateManager: null as unknown as MockConnectorTestControls['stateManager'],
+const mockControls: UnitTestConnectorControls = {
   setOrgData: vi.fn(),
   setUserOrgs: vi.fn(),
   setUserPackages: vi.fn(),
