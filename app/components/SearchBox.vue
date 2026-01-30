@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { debounce } from 'perfect-debounce'
 
-const isMobile = useIsMobile()
-
 withDefaults(
   defineProps<{
     inputClass?: string
@@ -60,6 +58,15 @@ watch(
   },
 )
 
+const autofocus = import.meta.client && !isTouchDevice()
+const headerSearchRef = useTemplateRef('headerSearchRef')
+onMounted(() => {
+  // Autofocus the search input on page load for non-touch devicese
+  if (!isTouchDevice()) {
+    headerSearchRef.value?.focus()
+  }
+})
+
 function handleSearchBlur() {
   isSearchFocused.value = false
   emit('blur')
@@ -86,9 +93,10 @@ function handleSearchFocus() {
 
           <input
             id="header-search"
-            :autofocus="!isMobile"
+            ref="headerSearchRef"
             v-model="searchQuery"
             type="search"
+            :autofocus="autofocus"
             name="q"
             :placeholder="$t('search.placeholder')"
             v-bind="noCorrect"
