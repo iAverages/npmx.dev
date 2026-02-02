@@ -48,6 +48,8 @@ function getStatusClass(status?: FacetValue['status']): string {
       return 'text-amber-400'
     case 'bad':
       return 'text-red-400'
+    case 'muted':
+      return 'text-fg-subtle'
     default:
       return 'text-fg'
   }
@@ -62,16 +64,11 @@ function isCellLoading(index: number): boolean {
 <template>
   <div class="contents">
     <!-- Label cell -->
-    <div
-      class="comparison-label flex items-center gap-1.5 px-4 py-3 border-b border-border"
-      :title="description"
-    >
+    <div class="comparison-label flex items-center gap-1.5 px-4 py-3 border-b border-border">
       <span class="text-xs text-fg-muted uppercase tracking-wider">{{ label }}</span>
-      <span
-        v-if="description"
-        class="i-carbon:information w-3 h-3 text-fg-subtle"
-        aria-hidden="true"
-      />
+      <TooltipApp v-if="description" :text="description" position="top">
+        <span class="i-carbon:information w-3 h-3 text-fg-subtle cursor-help" aria-hidden="true" />
+      </TooltipApp>
     </div>
 
     <!-- Value cells -->
@@ -103,7 +100,18 @@ function isCellLoading(index: number): boolean {
 
       <!-- Value display -->
       <template v-else>
+        <TooltipApp v-if="value.tooltip" :text="value.tooltip" position="top">
+          <span
+            class="relative font-mono text-sm text-center tabular-nums cursor-help"
+            :class="getStatusClass(value.status)"
+          >
+            <!-- Date values use DateTime component for i18n and user settings -->
+            <DateTime v-if="value.type === 'date'" :datetime="value.display" date-style="medium" />
+            <template v-else>{{ value.display }}</template>
+          </span>
+        </TooltipApp>
         <span
+          v-else
           class="relative font-mono text-sm text-center tabular-nums"
           :class="getStatusClass(value.status)"
         >
