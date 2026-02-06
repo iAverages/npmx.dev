@@ -212,7 +212,8 @@
       "no_readme": "Aucun README disponible.",
       "view_on_github": "Voir sur GitHub",
       "toc_title": "Sommaire",
-      "callout": {}
+      "callout": {},
+      "copy_as_markdown": "Copier le README en markdown"
     },
     "provenance_section": {},
     "keywords_title": "Mots-clés",

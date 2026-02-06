@@ -62,8 +62,14 @@ const { data: readmeData } = useLazyFetch<ReadmeResponse>(
     const version = requestedVersion.value
     return version ? `${base}/v/${version}` : base
   },
-  { default: () => ({ html: '', playgroundLinks: [], toc: [] }) },
+  { default: () => ({ html: '', md: '', playgroundLinks: [], toc: [] }) },
 )
+
+//copy README file as Markdown
+const { copied: copiedReadme, copy: copyReadme } = useClipboard({
+  source: () => readmeData.value?.md ?? '',
+  copiedDuring: 2000,
+})
 
 // Track active TOC item based on scroll position
 const tocItems = computed(() => readmeData.value?.toc ?? [])
@@ -1136,12 +1142,39 @@ onKeyStroke(
             </a>
           </h2>
           <ClientOnly>
-            <ReadmeTocDropdown
-              v-if="readmeData?.toc && readmeData.toc.length > 1"
-              :toc="readmeData.toc"
-              :active-id="activeTocId"
-              :scroll-to-heading="scrollToHeading"
-            />
+            <div class="flex items-center gap-2">
+              <!-- Copy readme as Markdown button -->
+              <TooltipApp
+                v-if="readmeData?.md"
+                :text="$t('package.readme.copy_as_markdown')"
+                position="bottom"
+              >
+                <button
+                  type="button"
+                  @click="copyReadme()"
+                  class="px-2 py-1.5 font-mono text-xs rounded transition-colors duration-150 inline-flex items-center gap-1.5"
+                  :class="
+                    copiedReadme ? 'text-accent bg-accent/10' : 'text-fg-subtle bg-bg hover:text-fg'
+                  "
+                  :aria-label="
+                    copiedReadme ? $t('common.copied') : $t('package.readme.copy_as_markdown')
+                  "
+                >
+                  <span
+                    :class="copiedReadme ? 'i-carbon:checkmark' : 'i-simple-icons:markdown'"
+                    class="size-3"
+                    aria-hidden="true"
+                  />
+                  {{ copiedReadme ? $t('common.copied') : $t('common.copy') }}
+                </button>
+              </TooltipApp>
+              <ReadmeTocDropdown
+                v-if="readmeData?.toc && readmeData.toc.length > 1"
+                :toc="readmeData.toc"
+                :active-id="activeTocId"
+                :scroll-to-heading="scrollToHeading"
+              />
+            </div>
           </ClientOnly>
         </div>
 
