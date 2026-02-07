@@ -1,33 +1,9 @@
 <script setup lang="ts">
-interface NuxtTimeProps {
-  datetime: string | number | Date
-  localeMatcher?: 'best fit' | 'lookup'
-  weekday?: 'long' | 'short' | 'narrow'
-  era?: 'long' | 'short' | 'narrow'
-  year?: 'numeric' | '2-digit'
-  month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow'
-  day?: 'numeric' | '2-digit'
-  hour?: 'numeric' | '2-digit'
-  minute?: 'numeric' | '2-digit'
-  second?: 'numeric' | '2-digit'
-  timeZoneName?: 'short' | 'long' | 'shortOffset' | 'longOffset' | 'shortGeneric' | 'longGeneric'
-  formatMatcher?: 'best fit' | 'basic'
-  hour12?: boolean
-  timeZone?: string
+import type { NuxtTimeProps } from 'nuxt/app'
 
-  calendar?: string
-  dayPeriod?: 'narrow' | 'short' | 'long'
-  numberingSystem?: string
+interface DateTimeProps extends Omit<NuxtTimeProps, 'title' | 'relative' | 'locale'> {}
 
-  dateStyle?: 'full' | 'long' | 'medium' | 'short'
-  timeStyle?: 'full' | 'long' | 'medium' | 'short'
-  hourCycle?: 'h11' | 'h12' | 'h23' | 'h24'
-
-  numeric?: 'always' | 'auto'
-  relativeStyle?: 'long' | 'short' | 'narrow'
-}
-
-const props = withDefaults(defineProps<NuxtTimeProps>(), {
+const props = withDefaults(defineProps<DateTimeProps>(), {
   hour12: undefined,
 })
 
@@ -129,6 +105,7 @@ if (import.meta.server) {
   }
   onPrehydrate(el => {
     const now = (window._nuxtTimeNow ||= Date.now())
+    // eslint-disable-next-line eslint-plugin-unicorn/consistent-function-scoping
     const toCamelCase = (name: string, index: number) => {
       if (index > 0) {
         return name[0]!.toUpperCase() + name.slice(1)
