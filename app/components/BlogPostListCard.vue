@@ -29,7 +29,7 @@ defineProps<{
       class="flex items-center gap-4 focus-visible:outline-none after:content-[''] after:absolute after:inset-0"
     >
       <!-- Text Content -->
-      <div class="flex-1 min-w-0 text-left gap-2">
+      <div class="flex-1 min-w-0 text-start gap-2">
         <span class="text-xs text-fg-muted font-mono">{{ published }}</span>
         <h2
           class="font-mono text-xl font-medium text-fg group-hover:text-primary transition-colors hover:underline"
