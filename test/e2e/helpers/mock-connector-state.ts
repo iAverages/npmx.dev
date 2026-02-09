@@ -23,7 +23,7 @@ export {
   MockConnectorStateManager,
   createMockConnectorState,
   DEFAULT_MOCK_CONFIG,
-} from '../../shared/test-utils'
+} from '../../test-utils'
 
 // Singleton management for the mock server
 import {
@@ -31,7 +31,7 @@ import {
   createMockConnectorState,
   DEFAULT_MOCK_CONFIG,
   type MockConnectorConfig,
-} from '../../shared/test-utils'
+} from '../../test-utils'
 
 let globalStateManager: MockConnectorStateManager | null = null
 

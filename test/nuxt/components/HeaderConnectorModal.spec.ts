@@ -1,5 +1,5 @@
 /**
- * Tests for ConnectorModal component.
+ * Tests for HeaderConnectorModal component.
  *
  * Uses the mock connector composable to test various states
  * without needing an actual HTTP server.
@@ -9,12 +9,12 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { ref, computed, readonly, nextTick } from 'vue'
 import type { VueWrapper } from '@vue/test-utils'
-import type { MockConnectorTestControls } from '../../../shared/test-utils'
+import type { MockConnectorTestControls } from '../../test-utils'
 
 /** Subset of MockConnectorTestControls for unit tests that don't need stateManager */
 type UnitTestConnectorControls = Omit<MockConnectorTestControls, 'stateManager'>
 import type { PendingOperation } from '../../../cli/src/types'
-import { ConnectorModal } from '#components'
+import { HeaderConnectorModal } from '#components'
 
 // Mock state that will be controlled by tests
 const mockState = ref({
@@ -167,10 +167,10 @@ afterEach(() => {
   }
 })
 
-describe('ConnectorModal', () => {
+describe('HeaderConnectorModal', () => {
   describe('Disconnected state', () => {
     it('shows connection form when not connected', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -193,7 +193,7 @@ describe('ConnectorModal', () => {
     })
 
     it('shows the CLI command to run', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -204,7 +204,7 @@ describe('ConnectorModal', () => {
     })
 
     it('can copy command to clipboard', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -223,7 +223,7 @@ describe('ConnectorModal', () => {
     })
 
     it('disables connect button when token is empty', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -235,7 +235,7 @@ describe('ConnectorModal', () => {
     })
 
     it('enables connect button when token is entered', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -258,7 +258,7 @@ describe('ConnectorModal', () => {
       // Simulate an error before mounting
       mockControls.simulateError('Could not reach connector. Is it running?')
 
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -281,7 +281,7 @@ describe('ConnectorModal', () => {
     })
 
     it('shows connected status', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -292,7 +292,7 @@ describe('ConnectorModal', () => {
     })
 
     it('shows logged in username', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -303,7 +303,7 @@ describe('ConnectorModal', () => {
     })
 
     it('shows disconnect button', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -318,7 +318,7 @@ describe('ConnectorModal', () => {
     })
 
     it('hides connection form when connected', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -333,7 +333,7 @@ describe('ConnectorModal', () => {
 
   describe('Modal behavior', () => {
     it('closes modal when close button is clicked', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -354,7 +354,7 @@ describe('ConnectorModal', () => {
     })
 
     it('closes modal when backdrop is clicked', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: true },
         attachTo: document.body,
       })
@@ -376,7 +376,7 @@ describe('ConnectorModal', () => {
     })
 
     it('does not render dialog when open is false', async () => {
-      currentWrapper = await mountSuspended(ConnectorModal, {
+      currentWrapper = await mountSuspended(HeaderConnectorModal, {
         props: { open: false },
         attachTo: document.body,
       })
