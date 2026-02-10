@@ -84,8 +84,8 @@ function onPostMessage(event: MessageEvent) {
   max-width: 37.5rem;
   width: 100%;
   margin: 1.5rem auto;
-  /* INFO: Necessary to remove the white 1px line at the bottom of the embed. Also sets border-radius  */
-  clip-path: inset(0 0 1px 0 round 0.75rem);
+  border-radius: 0.75rem;
+  overflow: hidden;
 }
 
 .bluesky-embed-container > .loading-spinner {
