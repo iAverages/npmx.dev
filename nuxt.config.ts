@@ -90,14 +90,29 @@ export default defineNuxtConfig({
   routeRules: {
     // API routes
     '/api/**': { isr: 60 },
-    '/api/registry/docs/**': { isr: true, cache: { maxAge: 365 * 24 * 60 * 60 } },
-    '/api/registry/file/**': { isr: true, cache: { maxAge: 365 * 24 * 60 * 60 } },
-    '/api/registry/provenance/**': { isr: true, cache: { maxAge: 365 * 24 * 60 * 60 } },
-    '/api/registry/files/**': { isr: true, cache: { maxAge: 365 * 24 * 60 * 60 } },
+    '/api/registry/docs/**': {
+      isr: true,
+      cache: { maxAge: 365 * 24 * 60 * 60 },
+    },
+    '/api/registry/file/**': {
+      isr: true,
+      cache: { maxAge: 365 * 24 * 60 * 60 },
+    },
+    '/api/registry/provenance/**': {
+      isr: true,
+      cache: { maxAge: 365 * 24 * 60 * 60 },
+    },
+    '/api/registry/files/**': {
+      isr: true,
+      cache: { maxAge: 365 * 24 * 60 * 60 },
+    },
     '/:pkg/.well-known/skills/**': { isr: 3600 },
     '/:scope/:pkg/.well-known/skills/**': { isr: 3600 },
     '/__og-image__/**': { isr: getISRConfig(60) },
-    '/_avatar/**': { isr: 3600, proxy: 'https://www.gravatar.com/avatar/**' },
+    '/_avatar/**': {
+      isr: 3600,
+      proxy: 'https://www.gravatar.com/avatar/**',
+    },
     '/opensearch.xml': { isr: true },
     '/oauth-client-metadata.json': { prerender: true },
     // never cache
@@ -127,7 +142,9 @@ export default defineNuxtConfig({
     '/settings': { prerender: true },
     // proxy for insights
     '/blog/**': { isr: true, prerender: true },
-    '/_v/script.js': { proxy: 'https://npmx.dev/_vercel/insights/script.js' },
+    '/_v/script.js': {
+      proxy: 'https://npmx.dev/_vercel/insights/script.js',
+    },
     '/_v/view': { proxy: 'https://npmx.dev/_vercel/insights/view' },
     '/_v/event': { proxy: 'https://npmx.dev/_vercel/insights/event' },
     '/_v/session': { proxy: 'https://npmx.dev/_vercel/insights/session' },
@@ -288,6 +305,7 @@ export default defineNuxtConfig({
         },
       }),
     ],
+
     optimizeDeps: {
       include: [
         '@vueuse/core',

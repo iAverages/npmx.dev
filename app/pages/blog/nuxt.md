@@ -14,3 +14,5 @@ draft: false
 # Nuxt
 
 What a great meta-framework!!
+
+<EmbeddableBlueskyPost url="https://bsky.app/profile/danielroe.dev/post/3md3cmrg56k2r" />
