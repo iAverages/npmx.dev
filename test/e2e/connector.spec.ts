@@ -170,12 +170,17 @@ test.describe('Organization Management', () => {
     // Click "Add member" button
     await orgManagement.getByRole('button', { name: /add member/i }).click()
 
-    // Fill in the form
+    // Wait for the add-member form to appear
     const usernameInput = orgManagement.locator('input[name="new-member-username"]')
+    await expect(usernameInput).toBeVisible({ timeout: 5000 })
+
+    // Fill in the form
     await usernameInput.fill('newuser')
 
     // Select role
-    await orgManagement.locator('select[name="new-member-role"]').selectOption('admin')
+    const roleSelect = orgManagement.locator('select[name="new-member-role"]')
+    await expect(roleSelect).toBeVisible({ timeout: 5000 })
+    await roleSelect.selectOption('admin')
 
     // Submit
     await orgManagement.getByRole('button', { name: /^add$/i }).click()
